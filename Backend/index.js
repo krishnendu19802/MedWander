@@ -4,7 +4,7 @@ const cors=require('cors')
 const mysql2=require('mysql2')
 require('dotenv').config()
 const formAddition=require('./Routes/FormAddition.js')
-
+const dataRetreival=require('./Routes/DataRetrieval.js')
 app.use(express.json());
 app.use(cors())
 const port=process.env.PORT
@@ -33,5 +33,7 @@ conn.connect((err) => {
 
 
 app.use('/form-addition',formAddition(conn))
+app.use('/get-data',dataRetreival(conn))
+
 
 
