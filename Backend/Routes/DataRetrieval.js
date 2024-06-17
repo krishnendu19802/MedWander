@@ -24,13 +24,12 @@ const returnData=(conn)=>{
                     res.status(400).send(error)
                 else{
                     // console.log(result)
-                    if(result.length===0){
-                        res.status(200).send('No records found')
-                        return
+                    if(result.length!==0){
+                        timestamp=formatDate(result[result.length-1].TSTAMP)
+                        writeToSheet(result)
+                        
                     }
                     
-                    timestamp=formatDate(result[result.length-1].TSTAMP)
-                    writeToSheet(result)
                     sql=`SELECT * FROM SUBMISSIONS ORDER BY TSTAMP;`
                     conn.query(sql,(error,rslt)=>{
                         if(error)

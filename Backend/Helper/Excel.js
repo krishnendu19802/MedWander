@@ -40,7 +40,7 @@ const getAccessToken = async (code) => {
 // console.log(token)
 // oAuth2Client.setCredentials(token);
 const writeToSheet =  (data) => {
-    console.log(data)
+    // console.log(data)
     if (data === undefined)
         return 
     const spreadsheetId = process.env.spreadsheetId; // Replace with your actual spreadsheet ID
