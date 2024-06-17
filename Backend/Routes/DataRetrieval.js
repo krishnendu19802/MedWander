@@ -1,7 +1,7 @@
 const express = require('express')
 const Router = express.Router()
-const writeToSheet=require('../Helper/Excel.js')
-let timestamp=0
+const writeToSheet = require('../Helper/Excel.js')
+let timestamp = 0
 
 const formatDate = (date) => {
     const year = date.getFullYear();
@@ -13,30 +13,32 @@ const formatDate = (date) => {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
 
-const returnData=(conn)=>{
+const returnData = (conn) => {
 
-    Router.get('/',(req,res)=>{
+    Router.get('/', (req, res) => {
         const formattedTimestamp = timestamp === 0 ? 0 : `'${timestamp}'`;
-        let sql=`SELECT * FROM SUBMISSIONS WHERE tstamp>${formattedTimestamp} ORDER BY TSTAMP ;`
+        let sql = `SELECT * FROM SUBMISSIONS WHERE tstamp>${formattedTimestamp} ORDER BY TSTAMP ;`
         try {
-            conn.query(sql,(error,result)=>{
-                if(error)
+            conn.query(sql, (error, result) => {
+                if (error)
                     res.status(400).send(error)
-                else{
+                else {
                     // console.log(result)
-                    if(result.length!==0){
-                        timestamp=formatDate(result[result.length-1].TSTAMP)
-                        writeToSheet(result)
-                        
+                    if (result.length !== 0) {
+                        timestamp = formatDate(result[result.length - 1].TSTAMP)
+                        if (timestamp === 0)
+                            writeToSheet(result, 2)
+                        else
+                            writeToSheet(result, 1)
                     }
-                    
-                    sql=`SELECT * FROM SUBMISSIONS ORDER BY TSTAMP;`
-                    conn.query(sql,(error,rslt)=>{
-                        if(error)
-                            {res.status(500).send(error)
-                                return
-                            }
-                        else{
+
+                    sql = `SELECT * FROM SUBMISSIONS ORDER BY TSTAMP DESC;`
+                    conn.query(sql, (error, rslt) => {
+                        if (error) {
+                            res.status(500).send(error)
+                            return
+                        }
+                        else {
                             res.status(200).send(rslt)
                         }
                     })
@@ -49,4 +51,4 @@ const returnData=(conn)=>{
     return Router
 }
 
-module.exports=returnData
+module.exports = returnData

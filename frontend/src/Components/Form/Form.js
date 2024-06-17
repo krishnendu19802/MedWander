@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { parsePhoneNumberFromString } from 'libphonenumber-js';
+import Loader from '../Loader/Loader';
 export default function Form({ type,sendValue }) {
    
     const countryCodes = [
@@ -38,18 +39,26 @@ export default function Form({ type,sendValue }) {
         if (!(phoneNumberObj && phoneNumberObj.isValid())) {
 
             setError('Invalid phone number for the selected country code.');
+            return
         }
         if ((containsNumber(details.name))) {
             setError('Name cannot contain numbers');
+            return
 
         }
         if(details.name.length===0){
             setError('Enter name')
+            return
         }
         sendValue(details)
     };
+
+
+
     return (
-        <div>
+        <div >
+            
+            
             <form onSubmit={handleSubmit} className="bg-white mt-4 p-8 rounded shadow-md w-full ">
                 <h2 className="text-2xl font-bold mb-4 text-center">Form {type}</h2>
                 <hr />

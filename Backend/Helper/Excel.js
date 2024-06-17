@@ -39,7 +39,7 @@ const getAccessToken = async (code) => {
 // token=getAccessToken(process.env.code)
 // console.log(token)
 // oAuth2Client.setCredentials(token);
-const writeToSheet =  (data) => {
+const writeToSheet =  (data,typ) => {
     // console.log(data)
     if (data === undefined)
         return 
@@ -52,19 +52,38 @@ const writeToSheet =  (data) => {
     // console.log(values)
     
     try {
-        sheets.spreadsheets.values.append({
-            spreadsheetId: spreadsheetId,
-            range: range,
-            valueInputOption: 'RAW',
-            resource: {
-                values
-            }
-        }).then((result) => {
-            // console.log(result)
-            return result
-        }).catch((error) => {
-            console.log(error)
-        });
+
+        if(typ===1){
+            sheets.spreadsheets.values.append({
+                spreadsheetId: spreadsheetId,
+                range: range,
+                valueInputOption: 'RAW',
+                resource: {
+                    values
+                }
+            }).then((result) => {
+                // console.log(result)
+                return result
+            }).catch((error) => {
+                console.log(error)
+            });
+        }
+        else{
+            sheets.spreadsheets.values.update({
+                spreadsheetId: spreadsheetId,
+                range: range,
+                valueInputOption: 'RAW',
+                resource: {
+                    values
+                }
+            }).then((result) => {
+                // console.log(result)
+                return result
+            }).catch((error) => {
+                console.log(error)
+            });
+        }
+        
 
         
     } catch (error) {
