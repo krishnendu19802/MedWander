@@ -58,7 +58,7 @@ export default function List() {
                         {formData.map((data,index) => (
                             <tr key={data.slNo} className={`border-b bg-gray-${index%2===0?'0':'100'} hover:bg-gray-300 `}>
                                 <td className="py-3 px-6 text-left whitespace-nowrap">{index+1}</td>
-                                <td className="py-3 px-6 text-left">{data.FROM_TYPE}</td>
+                                <td className="py-3 px-6 text-left">{data.FORM_TYPE}</td>
                                 <td className="py-3 px-6 text-left">{data.NAME}</td>
                                 <td className="py-3 px-6 text-left">{data.COUNTRY_CODE}</td>
                                 <td className="py-3 px-6 text-left">{data.PHONE_NUMBER}</td>
